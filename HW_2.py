@@ -35,5 +35,18 @@ def get_cookbook(file):
 
     return cookbook
 
+def get_shop_list_by_dishes(dishes, person_count):
+    shop_list = {}
+    cookbook = get_cookbook('Recipes.txt')
+    for u in dishes:
+        for i in cookbook[u]:
+            if i['ingredient_name'] not in shop_list:
+                ingredients_count = int(i['quantity']) * person_count
+                shop_list[i['ingredient_name']] = ({'measure':i['measure'], 'quantity':ingredients_count})
+            else:
+                ingredients_count = int(i['quantity']) * person_count
+                shop_list[i['ingredient_name']]['quantity'] += ingredients_count
+    return shop_list
 
-pprint(get_cookbook("Recipes.txt"))
+pprint(get_cookbook('Recipes.txt'))
+pprint(get_shop_list_by_dishes(['Омлет', 'Пицца', 'Фахитос'], 6))
